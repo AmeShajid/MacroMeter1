@@ -1,0 +1,10 @@
+{
+  "DishName": "Blueberry Muffins",
+  "Weight_g": 750.0,
+  "Macros": {
+    "calories": 2448.38,
+    "protein_g": 38.6,
+    "carbs_g": 345.24,
+    "fat_g": 104.14
+  }
+}
