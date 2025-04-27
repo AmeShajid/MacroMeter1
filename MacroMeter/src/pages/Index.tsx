@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import MacroCard from "@/components/MacroCard";
 import Navbar from "@/components/Navbar";
 import { motion, AnimatePresence } from "framer-motion";
 import { currentMeal } from "@/data/mockData";
+import { macroGoals } from "@/data/mockData";  // This is causing the circular dependency
 
 const Index = () => {
   const [isTracking, setIsTracking] = useState(false);

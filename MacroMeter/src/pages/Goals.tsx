@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import MacroProgress from "@/components/MacroProgress";
-import { macroGoals as defaultMacroGoals, mealHistory } from "@/data/mockData";
+import { macroGoals as defaultMacroGoals, getMealHistory } from "@/data/mockData";
 import { motion } from "framer-motion";
 import { getMacroGoals, MacroGoals } from "@/models/types";
 import { format, isToday, isYesterday } from "date-fns";
@@ -48,7 +47,8 @@ const Goals = () => {
     // Format the selected date to match the format in meal history
     const dateString = format(selectedDate, "yyyy-MM-dd");
     
-    // Filter meals for the selected date
+    // Get meals from localStorage and filter for the selected date
+    const mealHistory = getMealHistory();
     const mealsForDate = mealHistory.filter(meal => meal.date === dateString);
     
     // Calculate totals

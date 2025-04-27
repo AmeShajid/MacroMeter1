@@ -1,4 +1,3 @@
-
 export interface MacroData {
   food_name: string;
   weight: string;

@@ -1,17 +1,20 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HistoryItem from "@/components/HistoryItem";
-import { mealHistory } from "@/data/mockData";
+import { getMealHistory, addToMealHistory } from "@/data/mockData";
 import { motion } from "framer-motion";
+import { MacroData } from "@/models/types";
 
 const History = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  
-  const filteredHistory = mealHistory.filter(
-    item => item.food_name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  
+  const [mealHistory, setMealHistory] = useState<MacroData[]>([]);
+
+  useEffect(() => {
+    // Load meal history from localStorage when component mounts
+    const savedHistory = getMealHistory();
+    setMealHistory(savedHistory);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col">
       <Navbar />
@@ -35,13 +38,21 @@ const History = () => {
         </div>
         
         <div className="space-y-4">
-          {filteredHistory.length > 0 ? (
-            filteredHistory.map((meal, index) => (
-              <HistoryItem key={index} data={meal} />
-            ))
+          {mealHistory
+            .filter(item => item.food_name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .length > 0 ? (
+            mealHistory
+              .filter(item => item.food_name.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map((meal, index) => (
+                <HistoryItem 
+                  key={`${meal.food_name}-${meal.date}-${index}`} 
+                  data={meal} 
+                />
+              ))
           ) : (
             <div className="text-center py-8 text-gray-500">
-              No meal history found. Start tracking to see your meals here.
+              {searchTerm ? `No meals found matching "${searchTerm}"` : 
+                'No meal history found. Start tracking to see your meals here.'}
             </div>
           )}
         </div>
